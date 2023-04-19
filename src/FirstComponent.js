@@ -1,15 +1,17 @@
 import React from "react";
 
 function FirstComponent(props) {
-    console.log('This is our listing component', props.listOfTodos)
+    console.log('Todo List', props.listOfTodos)
     return (
         <div>
-            <h1>This is our listing component</h1>
+            <h1>Todo List</h1>
             <ol>
                 {props.listOfTodos.map((item, index) => {
-                    return <li key={index}>
-                        {props.listOfTodos[index]}
-                    </li>
+                    <div>
+                        return <li key={index}>
+                            {props.listOfTodos[index]}
+                        </li>
+                    </div>
                 })}
             </ol></div>
     )

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import FirstComponent from './FirstComponent';
+import SecondComponent from './FirstComponent';
+import { useState } from 'react';
 
 class App extends Component {
   constructor(props) {
@@ -9,7 +11,7 @@ class App extends Component {
     this.state = {
       isClicked: true,
       inputValue: "",
-      listOfTodos: []
+      listOfTodos: [],
     }
   }
   handleClick = () => {
@@ -23,6 +25,12 @@ class App extends Component {
     this.setState({ listOfTodos: [...this.state.listOfTodos, this.state.inputValue] })
     this.setState({ inputValue: "" })
   }
+  onDelete = (deletingItem) => {
+    const items = this.useState({ listOfTodos: [...this.state.listOfTodos, this.state.inputValue] })
+    const updatedList = items.filter((item) => item !== deletingItem)
+    this.setState({ listOfTodos: [...this.state.listOfTodos, updatedList] })
+  }
+
   render() {
     return (
       <div className="App" >
@@ -35,6 +43,7 @@ class App extends Component {
               <button type='submit'>Submit</button>
             </form>
             <FirstComponent listOfTodos={this.state.listOfTodos} />
+            {/* <SecondComponent listOfTodos={this.state.listOfTodos} /> */}
           </p>
           <a
             className="App-link"
