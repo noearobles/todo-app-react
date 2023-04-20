@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import FirstComponent from './FirstComponent';
-import SecondComponent from './FirstComponent';
-import { useState } from 'react';
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -25,12 +22,12 @@ class App extends Component {
     this.setState({ listOfTodos: [...this.state.listOfTodos, this.state.inputValue] })
     this.setState({ inputValue: "" })
   }
-  onDelete = (deletingItem) => {
-    const items = this.useState({ listOfTodos: [...this.state.listOfTodos, this.state.inputValue] })
-    const updatedList = items.filter((item) => item !== deletingItem)
-    this.setState({ listOfTodos: [...this.state.listOfTodos, updatedList] })
+  deleteItem = (index) => {
+    console.log('was clicked', index);
+    let copyOfList = this.state.listOfTodos;
+    copyOfList.splice(index, 1);
+    this.setState({ listOfTodos: [...copyOfList] });
   }
-
   render() {
     return (
       <div className="App" >
@@ -42,8 +39,7 @@ class App extends Component {
               </input>
               <button type='submit'>Submit</button>
             </form>
-            <FirstComponent listOfTodos={this.state.listOfTodos} />
-            {/* <SecondComponent listOfTodos={this.state.listOfTodos} /> */}
+            <FirstComponent listOfTodos={this.state.listOfTodos} clickToRemove={this.deleteItem} />
           </p>
           <a
             className="App-link"

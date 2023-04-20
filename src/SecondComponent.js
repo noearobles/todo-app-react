@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
 
-function SecondComponent(props) {
+// function SecondComponent(props) {
 
-}
+// }
 
-export default SecondComponent;
+// export default SecondComponent;
