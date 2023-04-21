@@ -11,9 +11,6 @@ class App extends Component {
       listOfTodos: [],
     }
   }
-  handleClick = () => {
-    this.state.isClicked ? this.setState({ isClicked: false }) : this.setState({ isClicked: true })
-  }
   handleChange = (e) => {
     this.setState({ inputValue: e.target.value })
   }
@@ -24,9 +21,9 @@ class App extends Component {
   }
   deleteItem = (index) => {
     console.log('was clicked', index);
-    let copyOfList = this.state.listOfTodos;
+    let copyOfList = [...this.state.listOfTodos];
     copyOfList.splice(index, 1);
-    this.setState({ listOfTodos: [...copyOfList] });
+    this.setState({ listOfTodos: copyOfList });
   }
   render() {
     return (
