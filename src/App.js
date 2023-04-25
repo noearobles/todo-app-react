@@ -1,46 +1,63 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
-import FirstComponent from './FirstComponent';
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isClicked: true,
-      inputValue: "",
-      listOfTodos: [],
-    }
-  }
-  handleChange = (e) => {
-    this.setState({ inputValue: e.target.value })
-  }
-  handleSubmit = (e) => {
-    e.preventDefault()
-    this.setState({ listOfTodos: [...this.state.listOfTodos, this.state.inputValue] })
-    this.setState({ inputValue: "" })
-  }
-  deleteItem = (index) => {
-    console.log('was clicked', index);
-    let copyOfList = [...this.state.listOfTodos];
-    copyOfList.splice(index, 1);
-    this.setState({ listOfTodos: copyOfList });
-  }
-  render() {
-    return (
-      <div className="App" >
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            <form onSubmit={this.handleSubmit}>
-              <input type="text" value={this.state.inputValue} onChange={this.handleChange}>
-              </input>
-              <button type='submit'>Submit</button>
-            </form>
-            <FirstComponent listOfTodos={this.state.listOfTodos} clickToRemove={this.deleteItem} />
-          </p>
-        </header>
-      </div>
-    );
-  }
+
+function Todo({ todo, index, completeTodo, RemoveTodo }) {
+  return (<div className="task" style={{ textDecoration: todo.isCompleted ? 'line-through' : '}' }}>
+    {todo.text}
+    <button style={{ background: "red" }} onClick={() => RemoveTodo(index)}>x</button>
+    <button onClick={() => completeTodo(index)}>Complete</button>
+  </div>)
 }
+
+function TodoForm({ addTodo, index }) {
+  const [value, setValue] = useState('')
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    if (!value) return;
+    addTodo(value);
+    setValue('')
+  }
+  return (
+    <form onSubmit={handleSubmit}>
+      <input type="text" value={value} onChange={e => setValue(e.target.value)} placeholder='Add todo'>
+      </input>
+      <button type='submit'>Submit</button>
+    </form>
+  )
+}
+function App() {
+  const [todos, listOfTodos] = useState([
+    {
+      text: 'Make a todo!',
+      isCompleted: false
+    }
+  ]);
+
+  const addTodo = text => {
+    const newTodos = [...todos, { text }]
+    listOfTodos(newTodos)
+  }
+  const completeTodo = index => {
+    const newTodos = [...todos];
+    newTodos[index].isCompleted = true;
+    listOfTodos(newTodos)
+  }
+  const RemoveTodo = index => {
+    const newTodos = [...todos];
+    newTodos.splice(index, 1);
+    listOfTodos(newTodos)
+  }
+  return (
+    <div className="todo-container" >
+      <div className='header'>TODO-LIST</div>
+      <div className='tasks'>
+        {todos.map((todo, index) => (
+          <Todo key={index} index={index} todo={todo} completeTodo={completeTodo} RemoveTodo={RemoveTodo} />
+        ))}
+        <TodoForm addTodo={addTodo} />
+      </div>
+    </div>
+  )
+};
 export default App;
