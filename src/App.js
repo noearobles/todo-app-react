@@ -19,11 +19,12 @@ function TodoForm({ addTodo, index }) {
     setValue('')
   }
   return (
+    <div className='create-task'>
     <form onSubmit={handleSubmit}>
       <input type="text" value={value} onChange={e => setValue(e.target.value)} placeholder='Add todo'>
       </input>
       <button type='submit'>Submit</button>
-    </form>
+    </form></div>
   )
 }
 function App() {
